@@ -235,6 +235,13 @@ defmodule Horde.Registry do
     GenServer.call(registry, {:unregister, name, self()})
   end
 
+  @doc "Similar to `Horde.Registry.unregister/2` but for data written using `Horde.Registry.put_meta/3`."
+  @spec unregister_meta(registry :: Registry.registry(), name :: Registry.key()) :: :ok
+  def unregister_meta(registry, name) when is_atom(registry) do
+    unregister(registry, name)
+    GenServer.call(registry, {:unregister_meta, name, self()})
+  end
+
   @doc false
   def whereis(search), do: lookup(search)
 
